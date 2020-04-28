@@ -1,5 +1,7 @@
-package ex9;
+package book;
 
+import book.Book;
+import book.BookDao;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
@@ -10,13 +12,10 @@ public class Main {
         Jdbi jdbi = Jdbi.create("jdbc:h2:mem:test");
         jdbi.installPlugin(new SqlObjectPlugin());
         try (Handle handle = jdbi.open()) {
-            LegoSetDao dao = handle.attach(LegoSetDao.class);
+            BookDao dao = handle.attach(BookDao.class);
             dao.createTable();
-            dao.insertLegoSet(new LegoSet("60073", 2015, 233));
-            dao.insertLegoSet(new LegoSet("75211", 2018, 519));
-            dao.insertLegoSet(new LegoSet("21034", 2017, 468));
-            dao.listLegoSets().stream().forEach(System.out::println);
-        }
+            dao.insertBook(new Book("9781937994303","Sir Arthur Conan Doyle","The Complete Sherlock Holmes", Book.Format.HARDBACK,
+                    "Race Point Publishing",2013  Sep ));
+            dao.ListBook().stream().forEach(System.out::println);
     }
-
 }
